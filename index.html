@@ -7,15 +7,25 @@
 </head>
 <body>
   <h1>Teclado Musical</h1>
-  <div class="teclado">
-    <button class="tecla" data-nota="C">Dó</button>
-    <button class="tecla" data-nota="D">Ré</button>
-    <button class="tecla" data-nota="E">Mi</button>
-    <button class="tecla" data-nota="F">Fa</button>
-    <button class="tecla" data-nota="G">Sol</button>
-    <button class="tecla" data-nota="A">Lá</button>
-    <button class="tecla" data-nota="B">Si</button>
+
+  <div class="piano">
+    <!-- Teclas brancas -->
+    <div class="tecla branca" data-nota="do">Dó</div>
+    <div class="tecla branca" data-nota="re">Ré</div>
+    <div class="tecla branca" data-nota="mi">Mi</div>
+    <div class="tecla branca" data-nota="fa">Fá</div>
+    <div class="tecla branca" data-nota="sol">Sol</div>
+    <div class="tecla branca" data-nota="la">Lá</div>
+    <div class="tecla branca" data-nota="si">Si</div>
+
+    <!-- Teclas pretas -->
+    <div class="tecla preta" style="left: 110px" data-nota="do#"></div>
+    <div class="tecla preta" style="left: 240px" data-nota="re#"></div>
+    <div class="tecla preta" style="left: 365px" data-nota="fa#"></div>
+    <div class="tecla preta" style="right: 240px" data-nota="sol#"></div>
+    <div class="tecla preta" style="right: 110px" data-nota="la#"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

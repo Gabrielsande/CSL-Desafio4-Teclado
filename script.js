@@ -1,40 +1,46 @@
-// Mapeamento de teclas físicas
 const mapeamento = {
-  'a': 'C',
-  's': 'D',
-  'd': 'E',
-  'f': 'F',
-  'g': 'G',
-  'h': 'A',
-  'j': 'B'
+  'z': 'do',
+  's': 'do#',
+  'x': 're',
+  'd': 're#',
+  'c': 'mi',
+  'v': 'fa',
+  'g': 'fa#',
+  'b': 'sol',
+  'h': 'sol#',
+  'n': 'la',
+  'j': 'la#',
+  'm': 'si',
 };
 
 function tocarNota(nota) {
-  const audio = new Audio(`sounds/${nota}.mp3`);
+  const nomeArquivo = `sons/som${nota.replace('#', 'Sustenido')}.mp3`;
+  const audio = new Audio(nomeArquivo);
   audio.play();
 }
 
-// Clique com o mouse
 document.querySelectorAll('.tecla').forEach(tecla => {
   tecla.addEventListener('click', () => {
     const nota = tecla.dataset.nota;
     tocarNota(nota);
+    tecla.classList.add('ativa');
+    setTimeout(() => tecla.classList.remove('ativa'), 150);
   });
 });
 
-// Pressionar o teclado físico
 document.addEventListener('keydown', (e) => {
   const tecla = e.key.toLowerCase();
   if (mapeamento[tecla]) {
-    tocarNota(mapeamento[tecla]);
-    document.querySelector(`[data-nota="${mapeamento[tecla]}"]`)?.classList.add('ativa');
+    const nota = mapeamento[tecla];
+    tocarNota(nota);
+    document.querySelector(`[data-nota="${nota}"]`)?.classList.add('ativa');
   }
 });
 
-// Remover o efeito de pressão
 document.addEventListener('keyup', (e) => {
   const tecla = e.key.toLowerCase();
   if (mapeamento[tecla]) {
-    document.querySelector(`[data-nota="${mapeamento[tecla]}"]`)?.classList.remove('ativa');
+    const nota = mapeamento[tecla];
+    document.querySelector(`[data-nota="${nota}"]`)?.classList.remove('ativa');
   }
 });

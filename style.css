@@ -1,7 +1,8 @@
 body {
-  font-family: sans-serif;
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
   text-align: center;
-  background: #f0f0f0;
   padding: 20px;
 }
 
@@ -9,24 +10,58 @@ h1 {
   margin-bottom: 20px;
 }
 
-.teclado {
+.piano {
+  position: relative;
+  width: 800px;
+  height: 480px;
+  margin: 100px auto 0 auto;
+  /* <-- Aqui define a margem superior como 100px */
+  background: #333;
+  border-radius: 10px;
+  padding: 10px;
   display: flex;
-  justify-content: center;
-  gap: 10px;
 }
 
 .tecla {
-  width: 60px;
-  height: 200px;
-  background: white;
-  border: 2px solid #444;
-  font-size: 18px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  user-select: none;
+  font-size: 14px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-  transition: transform 0.1s;
+  margin: 100px auto 0 auto;
+  /* <-- Aqui define a margem superior como 100px */
+
 }
 
-.tecla:active {
-  transform: scale(0.95);
-  background: #ccc;
+.tecla.branca {
+  width: 150px;
+  height: 370px;
+  background: white;
+  color: black;
+  border: 1px solid #999;
+  z-index: 1;
+  margin: 100px auto 0 auto;
+  /* <-- Aqui define a margem superior como 100px */
+
+}
+
+.tecla.preta {
+  position: absolute;
+  width: 60px;
+  height: 200px;
+  background: black;
+  top: 10px;
+  z-index: 2;
+  border-radius: 0 0 5px 5px;
+}
+
+.tecla.ativa {
+  background: #ccc !important;
+}
+
+.tecla.preta.ativa {
+  background: #444 !important;
 }
