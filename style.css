@@ -10,12 +10,68 @@ h1 {
   margin-bottom: 20px;
 }
 
+.controles {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  gap: 10px;
+}
+
+.controles button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para o botão Gravar */
+#btnGravar {
+  background-color: #e74c3c;
+}
+
+#btnGravar:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Estilo para o botão Reproduzir */
+#btnReproduzir {
+  background-color: #2ecc71;
+}
+
+#btnReproduzir:hover {
+  background-color: #27ae60;
+  transform: scale(1.05);
+}
+
+/* Estilo para o botão Modo Engraçado */
+#btnEngracado {
+  background-color: #f39c12;
+  color: black;
+}
+
+#btnEngracado:hover {
+  background-color: #d68910;
+  transform: scale(1.05);
+}
+
+/* Quando o modo engraçado está ativo */
+#btnEngracado.ativo {
+  background-color: #f1c40f;
+  color: black;
+}
+
 .piano {
   position: relative;
-  width: 800px;
+  width: 1100px;
   height: 480px;
-  margin: 100px auto 0 auto;
-  /* <-- Aqui define a margem superior como 100px */
+  margin: 100px auto 0 auto; /* margem superior 100px */
   background: #333;
   border-radius: 10px;
   padding: 10px;
@@ -31,9 +87,7 @@ h1 {
   font-size: 14px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  margin: 100px auto 0 auto;
-  /* <-- Aqui define a margem superior como 100px */
-
+  margin: 100px auto 0 auto; /* margem superior 100px */
 }
 
 .tecla.branca {
@@ -43,9 +97,7 @@ h1 {
   color: black;
   border: 1px solid #999;
   z-index: 1;
-  margin: 100px auto 0 auto;
-  /* <-- Aqui define a margem superior como 100px */
-
+  margin: 100px auto 0 auto; /* margem superior 100px */
 }
 
 .tecla.preta {
