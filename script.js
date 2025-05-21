@@ -2,6 +2,7 @@ const mapeamento = {
   'z': 'do',  's': 'do#', 'x': 're', 'd': 're#',
   'c': 'mi',  'v': 'fa',  'g': 'fa#', 'b': 'sol',
   'h': 'sol#','n': 'la',  'j': 'la#', 'm': 'si',
+  '1': 'engracado', '2': 'gravar', '3': 'reproduzir'
 };
 
 let gravando = false;
@@ -9,14 +10,25 @@ let gravaNotas = [];
 let inicioGravacao = 0;
 let modoEngracado = false;
 
+let duracaoReproducao = 0;
+let inicioReproducao = 0;
+let intervaloProgresso;
+let tocando = false;
+
 const btnGravar = document.getElementById('btnGravar');
 const btnReproduzir = document.getElementById('btnReproduzir');
 const btnEngracado = document.getElementById('btnEngracado');
 const barraProgresso = document.getElementById('barraProgresso');
 
+function formatarTempo(ms) {
+  const s = Math.floor(ms / 1000);
+  const min = Math.floor(s / 60);
+  const seg = s % 60;
+  return `${min}:${seg < 10 ? '0' + seg : seg}`;
+}
+
 function tocarNota(nota) {
   let audio;
-
   if (modoEngracado) {
     const random = Math.floor(Math.random() * 5) + 1;
     audio = new Audio(`sons/somEngracado${random}.mp3`);
@@ -24,7 +36,6 @@ function tocarNota(nota) {
     const nomeArquivo = `sons/som${nota.replace('#', 'Sustenido')}.mp3`;
     audio = new Audio(nomeArquivo);
   }
-
   audio.play();
 }
 
@@ -45,22 +56,25 @@ document.querySelectorAll('.tecla').forEach(tecla => {
 document.addEventListener('keydown', e => {
   const tecla = e.key.toLowerCase();
   if (mapeamento[tecla]) {
-    const nota = mapeamento[tecla];
-    tocarNota(nota);
-    const teclaElemento = document.querySelector(`[data-nota="${nota}"]`);
-    teclaElemento?.classList.add('ativa');
-
-    if (gravando) {
-      const tempoAgora = Date.now();
-      gravaNotas.push({ nota, tempo: tempoAgora - inicioGravacao });
+    const notaOuComando = mapeamento[tecla];
+    if (notaOuComando === 'gravar') btnGravar.click();
+    else if (notaOuComando === 'reproduzir') btnReproduzir.click();
+    else if (notaOuComando === 'engracado') btnEngracado.click();
+    else {
+      tocarNota(notaOuComando);
+      const teclaElemento = document.querySelector(`[data-nota="${notaOuComando}"]`);
+      teclaElemento?.classList.add('ativa');
+      if (gravando) {
+        const tempoAgora = Date.now();
+        gravaNotas.push({ nota: notaOuComando, tempo: tempoAgora - inicioGravacao });
+      }
     }
   }
 });
 
 document.addEventListener('keyup', e => {
-  const tecla = e.key.toLowerCase();
-  if (mapeamento[tecla]) {
-    const nota = mapeamento[tecla];
+  const nota = mapeamento[e.key.toLowerCase()];
+  if (nota && !['gravar', 'reproduzir', 'engracado'].includes(nota)) {
     document.querySelector(`[data-nota="${nota}"]`)?.classList.remove('ativa');
   }
 });
@@ -72,13 +86,11 @@ btnGravar.addEventListener('click', () => {
     inicioGravacao = Date.now();
     btnGravar.textContent = 'Parar';
     btnReproduzir.disabled = true;
-    atualizarBarra(0);
-    iniciarBarra();
+    atualizarBarraManual(0);
   } else {
     gravando = false;
     btnGravar.textContent = 'Gravar';
     btnReproduzir.disabled = gravaNotas.length === 0;
-    pararBarra();
   }
 });
 
@@ -87,8 +99,9 @@ btnReproduzir.addEventListener('click', () => {
 
   btnGravar.disabled = true;
   btnReproduzir.disabled = true;
-  atualizarBarra(0);
-  iniciarBarra(gravaNotas[gravaNotas.length - 1].tempo);
+
+  const duracao = gravaNotas[gravaNotas.length - 1].tempo;
+  iniciarBarra(duracao);
 
   gravaNotas.forEach(({ nota, tempo }, index) => {
     setTimeout(() => {
@@ -100,6 +113,7 @@ btnReproduzir.addEventListener('click', () => {
       if (index === gravaNotas.length - 1) {
         btnGravar.disabled = false;
         btnReproduzir.disabled = false;
+        pararBarra();
       }
     }, tempo);
   });
@@ -111,23 +125,41 @@ btnEngracado.addEventListener('click', () => {
   btnEngracado.textContent = modoEngracado ? 'Modo Normal 🎉' : 'Modo Engraçado 🎵';
 });
 
-// Barra de progresso
-let intervaloBarra;
+// BARRA DE PROGRESSO COM CONTROLE MANUAL
 
 function iniciarBarra(duracao = 5000) {
-  const inicio = Date.now();
-  intervaloBarra = setInterval(() => {
-    const tempoAtual = Date.now() - inicio;
-    const progresso = Math.min((tempoAtual / duracao) * 100, 100);
-    atualizarBarra(progresso);
+  duracaoReproducao = duracao;
+  inicioReproducao = Date.now();
+  tocando = true;
+
+  intervaloProgresso = setInterval(() => {
+    const tempoAtual = Date.now() - inicioReproducao;
+    const progresso = Math.min((tempoAtual / duracaoReproducao) * 100, 100);
+
+    barraProgresso.value = progresso;
+    document.getElementById('tempoAtual').textContent = formatarTempo(tempoAtual);
+    document.getElementById('tempoTotal').textContent = formatarTempo(duracaoReproducao);
+
     if (progresso >= 100) pararBarra();
   }, 100);
 }
 
-function atualizarBarra(porcentagem) {
-  barraProgresso.style.width = `${porcentagem}%`;
+function pararBarra() {
+  clearInterval(intervaloProgresso);
+  tocando = false;
 }
 
-function pararBarra() {
-  clearInterval(intervaloBarra);
+function atualizarBarraManual(porcentagem) {
+  barraProgresso.value = porcentagem;
+  document.getElementById('tempoAtual').textContent = formatarTempo(0);
+  document.getElementById('tempoTotal').textContent = formatarTempo(0);
 }
+
+barraProgresso.addEventListener('input', (e) => {
+  if (!tocando) return;
+  const novoProgresso = parseFloat(e.target.value);
+  const novoTempo = (novoProgresso / 100) * duracaoReproducao;
+
+  document.getElementById('tempoAtual').textContent = formatarTempo(novoTempo);
+  inicioReproducao = Date.now() - novoTempo;
+});

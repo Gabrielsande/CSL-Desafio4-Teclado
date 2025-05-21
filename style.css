@@ -3,81 +3,99 @@ body {
   color: white;
   font-family: Arial, sans-serif;
   text-align: center;
-  padding: 20px;
+  padding: 0px; /* Espaço em cima */
 }
 
 h1 {
-  margin-bottom: 20px;
-}
-
-.controles {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 10px auto;
-  display: flex;
-  gap: 10px;
-}
-
-.controles button {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilo para o botão Gravar */
-#btnGravar {
-  background-color: #e74c3c;
-}
-
-#btnGravar:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
-}
-
-/* Estilo para o botão Reproduzir */
-#btnReproduzir {
-  background-color: #2ecc71;
-}
-
-#btnReproduzir:hover {
-  background-color: #27ae60;
-  transform: scale(1.05);
-}
-
-/* Estilo para o botão Modo Engraçado */
-#btnEngracado {
-  background-color: #f39c12;
-  color: black;
-}
-
-#btnEngracado:hover {
-  background-color: #d68910;
-  transform: scale(1.05);
-}
-
-/* Quando o modo engraçado está ativo */
-#btnEngracado.ativo {
-  background-color: #f1c40f;
-  color: black;
+  margin-bottom: 0px;
 }
 
 .piano {
   position: relative;
   width: 1100px;
   height: 480px;
-  margin: 100px auto 0 auto; /* margem superior 100px */
+  margin: 100px auto 0 auto;
   background: #333;
   border-radius: 10px;
   padding: 10px;
   display: flex;
+  flex-wrap: wrap;
 }
 
+.controles {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+.controles button {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  
+}
+
+#btnGravar {
+  background-color: #e74c3c;
+}
+#btnGravar:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+#btnReproduzir {
+  width: 60px;   /* maior largura */
+  height: 60px;  /* maior altura */
+  background-color: transparent; /* fundo transparente */
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  box-shadow: none;  /* sem sombra */
+  transition: transform 0.2s;
+}
+
+/* Triângulo play maior */
+#btnReproduzir::before {
+  content: "";
+  position: absolute;
+  left: 22px;  /* ajustado para centralizar no botão maior */
+  top: 15px;
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 24px solid white; /* triângulo branco */
+}
+
+/* Hover com leve escala e leve sombra */
+#btnReproduzir:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+}
+#btnEngracado {
+  background-color: #f39c12;
+  color: black;
+}
+#btnEngracado:hover {
+  background-color: #d68910;
+  transform: scale(1.05);
+}
+#btnEngracado.ativo {
+  background-color: #f1c40f;
+  color: black;
+}
+
+/* Teclas */
 .tecla {
   position: relative;
   display: flex;
@@ -116,4 +134,39 @@ h1 {
 
 .tecla.preta.ativa {
   background: #444 !important;
+}
+/* Barra de Progresso */
+#barraProgressoContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+#barraProgresso {
+  flex: 1;
+  height: 10px;
+  background: #2ecc71;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+#barraProgresso::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+#tempoAtual,
+#tempoTotal {
+  width: 50px;
+  text-align: center;
+  font-size: 12px;
 }

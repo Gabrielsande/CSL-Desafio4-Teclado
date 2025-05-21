@@ -9,13 +9,17 @@
   <h1>Teclado Musical</h1>
 
   <div class="piano">
+    <!-- Botões -->
     <div class="controles">
-      <button id="btnGravar">Gravar</button>
-      <button id="btnReproduzir">Reproduzir</button>
+      
       <button id="btnEngracado">Modo Engraçado 🎵</button>
-    </div>
-    <div id="barraProgressoContainer">
-      <div id="barraProgresso"></div>
+      <button id="btnGravar">Gravar</button>
+      <button id="btnReproduzir" aria-label=></button>
+      <div id="barraProgressoContainer">
+    <span id="tempoAtual">0:00</span>
+    <input type="range" id="barraProgresso" value="0" min="0" max="100" />
+    <span id="tempoTotal">0:00</span>
+  </div>
     </div>
 
     <!-- Teclas brancas -->
@@ -28,12 +32,14 @@
     <div class="tecla branca" data-nota="si">Si</div>
 
     <!-- Teclas pretas -->
-    <div class="tecla preta" style="left: 110px" data-nota="do#"></div>
-    <div class="tecla preta" style="left: 240px" data-nota="re#"></div>
-    <div class="tecla preta" style="left: 365px" data-nota="fa#"></div>
-    <div class="tecla preta" style="right: 240px" data-nota="sol#"></div>
-    <div class="tecla preta" style="right: 110px" data-nota="la#"></div>
+    <div class="tecla preta" style="left: 135px" data-nota="do#"></div>
+    <div class="tecla preta" style="left: 290px" data-nota="re#"></div>
+    <div class="tecla preta" style="left: 450px" data-nota="fa#"></div>
+    <div class="tecla preta" style="right: 295px" data-nota="sol#"></div>
+    <div class="tecla preta" style="right: 135px" data-nota="la#"></div>
   </div>
+
+  <!-- Barra de progresso com tempo -->
 
   <script src="script.js"></script>
 </body>
