@@ -1,172 +1,271 @@
+/* Estilos gerais do corpo da página */
 body {
-  background: #111;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 0px; /* Espaço em cima */
+  background: #111; /* Cor de fundo escura */
+  color: white; /* Cor do texto branca */
+  font-family: Arial, sans-serif; /* Fonte do texto */
+  text-align: center; /* Alinha o texto ao centro */
+  padding: 0px; /* Sem espaçamento nas bordas */
+  transition: background 0.3s, color 0.3s; /* Transição suave para mudanças de cor e fundo */
 }
 
+/* Estilos para o modo claro */
+body.white-mode {
+  background: #fff; /* Cor de fundo branca para o modo claro */
+  color: black; /* Cor do texto preta para o modo claro */
+}
+
+/* Estilos para o botão de alternância de tema */
+#toggleTheme {
+  position: absolute; /* Posiciona o botão no canto superior direito */
+  top: 10px; /* Distância de 10px do topo */
+  right: 10px; /* Distância de 10px da direita */
+  z-index: 10; /* Coloca o botão acima de outros elementos */
+  background: #f39c12; /* Cor de fundo amarela */
+  border: none; /* Remove a borda */
+  border-radius: 25px; /* Borda arredondada */
+  color: black; /* Cor do texto preta */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
+  transition: background 0.3s; /* Transição suave para a mudança de cor */
+}
+
+/* Efeito hover para o botão de alternância de tema */
+#toggleTheme:hover {
+  background: #f1c40f; /* Muda a cor do fundo quando o botão é sobrevoado */
+}
+
+/* Estilos para a tela de carregamento */
+#loading-screen {
+  position: fixed; /* Fixado no topo da tela */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%; /* Ocupa toda a largura da tela */
+  height: 100%; /* Ocupa toda a altura da tela */
+  inset: 0; /* Coloca o elemento nas bordas da tela */
+  background-color: #111; /* Cor de fundo escura */
+  color: white; /* Cor do texto branca */
+  font-family: Arial, sans-serif; /* Fonte do texto */
+  display: flex; /* Exibe como um flex container */
+  flex-direction: column; /* Organiza os filhos em coluna */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  z-index: 9999; /* Coloca o elemento acima de outros */
+}
+
+/* Estilos do loader (ícone de carregamento) */
+.loader {
+  border: 12px solid #000000; /* Borda preta */
+  border-top: 12px solid #ffffff; /* Borda superior branca */
+  border-radius: 50%; /* Torna o loader redondo */
+  width: 80px; /* Largura do loader */
+  height: 80px; /* Altura do loader */
+  animation: spin 1s linear infinite; /* Animação de rotação */
+  margin-bottom: 1rem; /* Espaçamento abaixo do loader */
+}
+
+/* Animação de rotação para o loader */
+@keyframes spin {
+  to {
+    transform: rotate(360deg); /* Rotaciona o loader 360 graus */
+  }
+}
+
+/* Estilos do título */
 h1 {
-  margin-bottom: 0px;
+  margin-bottom: 0px; /* Remove a margem inferior */
 }
 
+/* Estilos para o piano */
 .piano {
-  position: relative;
-  width: 1100px;
-  height: 480px;
-  margin: 100px auto 0 auto;
-  background: #333;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
+  position: relative; /* Necessário para as teclas que possuem position: absolute */
+  width: 1100px; /* Largura do piano */
+  height: 470px; /* Altura do piano */
+  margin: 100px auto 0 auto; /* Margem superior de 100px e centraliza o piano horizontalmente */
+  background: #333; /* Cor de fundo escura */
+  border-radius: 10px; /* Bordas arredondadas */
+  padding: 0px; /* Sem espaçamento interno */
+  display: flex; /* Exibe as teclas em linha (horizontal) */
+  flex-wrap: wrap; /* Permite que as teclas se ajustem em várias linhas */
 }
 
+/* Estilos para os controles (botões) */
 .controles {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  display: flex;
-  gap: 5px;
-  z-index: 10;
+  position: absolute; /* Posiciona os controles fora do fluxo normal de layout */
+  top: 10px; /* Distância de 10px do topo */
+  left: 20px; /* Distância de 20px da esquerda */
+  display: flex; /* Exibe os botões em linha */
+  gap: 5px; /* Espaçamento entre os botões */
+  z-index: 10; /* Coloca os controles acima das teclas */
 }
 
+/* Estilos para os botões dos controles */
 .controles button {
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  
+  padding: 5px 10px; /* Espaçamento interno dos botões */
+  font-size: 12px; /* Tamanho da fonte nos botões */
+  font-weight: bold; /* Torna o texto em negrito */
+  border: none; /* Remove a borda */
+  border-radius: 20px; /* Borda arredondada */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
+  transition: background 0.3s, transform 0.2s; /* Transição suave para a cor de fundo e a transformação */
+  color: white; /* Cor do texto nos botões */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra sutil nos botões */
 }
 
+/* Estilos para o botão de gravar */
 #btnGravar {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Cor de fundo vermelha */
 }
+
+/* Efeito hover para o botão de gravar */
 #btnGravar:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
+  background-color: #c0392b; /* Cor de fundo mais escura quando sobrevoado */
+  transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
 }
 
+/* Estilos para o botão de reproduzir */
 #btnReproduzir {
-  width: 60px;   /* maior largura */
-  height: 60px;  /* maior altura */
-  background-color: transparent; /* fundo transparente */
-  border: none;
-  cursor: pointer;
-  position: relative;
-  padding: 0;
-  box-shadow: none;  /* sem sombra */
-  transition: transform 0.2s;
+  width: 60px; /* Largura do botão de reprodução */
+  height: 60px; /* Altura do botão de reprodução */
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Remove a borda */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
+  position: relative; /* Necessário para posicionar o triângulo play */
+  padding: 0; /* Sem espaçamento interno */
+  box-shadow: none; /* Remove a sombra */
+  transition: transform 0.2s; /* Transição suave para transformações */
 }
 
-/* Triângulo play maior */
+/* Estilos para o triângulo play dentro do botão de reprodução */
 #btnReproduzir::before {
-  content: "";
-  position: absolute;
-  left: 22px;  /* ajustado para centralizar no botão maior */
-  top: 15px;
-  width: 0;
-  height: 0;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 24px solid white; /* triângulo branco */
+  content: ""; /* Cria um conteúdo vazio (o triângulo) */
+  position: absolute; /* Posiciona o triângulo dentro do botão */
+  left: 22px; /* Ajusta para centralizar o triângulo */
+  top: 15px; /* Ajusta para centralizar verticalmente */
+  width: 0; /* Sem largura */
+  height: 0; /* Sem altura */
+  border-top: 15px solid transparent; /* Cria um triângulo com bordas */
+  border-bottom: 15px solid transparent; /* Cria um triângulo com bordas */
+  border-left: 24px solid white; /* Triângulo branco apontando para a direita */
 }
 
-/* Hover com leve escala e leve sombra */
+/* Efeito hover para o botão de reprodução */
 #btnReproduzir:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  transform: scale(1.1); /* Aumenta o tamanho do botão */
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7)); /* Adiciona uma sombra leve */
 }
+
+/* Estilos para o botão engraçado */
 #btnEngracado {
-  background-color: #f39c12;
-  color: black;
+  background-color: #f39c12; /* Cor de fundo amarela */
+  color: white; /* Cor do texto branca */
 }
+
+/* Efeito hover para o botão engraçado */
 #btnEngracado:hover {
-  background-color: #d68910;
-  transform: scale(1.05);
+  background-color: #d68910; /* Cor de fundo mais escura quando sobrevoado */
+  transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
 }
+
+/* Estilos para o botão engraçado ativo (quando ativado) */
 #btnEngracado.ativo {
-  background-color: #f1c40f;
-  color: black;
+  background-color: #f1c40f; /* Cor de fundo mais clara quando ativo */
+  color: black; /* Cor do texto preta quando ativo */
 }
 
-/* Teclas */
+/* Estilos para o botão salvar */
+#btnSalvar {
+  background-color: #2ecc71; /* Cor de fundo verde */
+  color: white; /* Cor do texto branca */
+}
+
+/* Efeito hover para o botão salvar */
+#btnSalvar:hover {
+  background-color: #27ae60; /* Cor de fundo mais escura quando sobrevoado */
+  transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
+}
+
+/* Estilos para as teclas do piano */
 .tecla {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  user-select: none;
-  font-size: 14px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  margin: 100px auto 0 auto; /* margem superior 100px */
+  position: relative; /* Necessário para as teclas posicionadas dentro do piano */
+  display: flex; /* Exibe as teclas em linha */
+  align-items: flex-end; /* Alinha as teclas para o fundo */
+  justify-content: center; /* Centraliza o texto dentro da tecla */
+  user-select: none; /* Impede a seleção de texto nas teclas */
+  font-size: 14px; /* Tamanho da fonte */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra nas teclas */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
+  margin: 100px auto 0 auto; /* Margem superior de 100px e centraliza as teclas */
 }
 
+/* Estilos para as teclas brancas */
 .tecla.branca {
-  width: 150px;
-  height: 370px;
-  background: white;
-  color: black;
-  border: 1px solid #999;
-  z-index: 1;
-  margin: 100px auto 0 auto; /* margem superior 100px */
+  width: 150px; /* Largura das teclas brancas */
+  height: 370px; /* Altura das teclas brancas */
+  background: white; /* Cor de fundo branca */
+  color: black; /* Cor do texto preta */
+  border: 1px solid #999; /* Borda cinza clara */
+  z-index: 1; /* Coloca as teclas brancas abaixo das pretas */
+  margin: 100px auto 0 auto; /* Margem superior de 100px e centraliza as teclas */
 }
 
+/* Estilos para as teclas pretas */
 .tecla.preta {
-  position: absolute;
-  width: 60px;
-  height: 200px;
-  background: black;
-  top: 10px;
-  z-index: 2;
-  border-radius: 0 0 5px 5px;
+  position: absolute; /* Posiciona as teclas pretas em relação às teclas brancas */
+  width: 60px; /* Largura das teclas pretas */
+  height: 200px; /* Altura das teclas pretas */
+  background: black; /* Cor de fundo preta */
+  top: 10px; /* Distância do topo */
+  z-index: 2; /* Coloca as teclas pretas acima das brancas */
+  border-radius: 0 0 5px 5px; /* Borda arredondada nas teclas pretas */
 }
 
+/* Estilos para teclas ativas (quando tocadas) */
 .tecla.ativa {
-  background: #ccc !important;
+  background: #ccc !important; /* Cor de fundo cinza claro quando ativa */
 }
 
+/* Estilos para teclas pretas ativas */
 .tecla.preta.ativa {
-  background: #444 !important;
+  background: #444 !important; /* Cor de fundo preta mais escura quando ativa */
 }
-/* Barra de Progresso */
+
+/* Estilos para a barra de progresso */
 #barraProgressoContainer {
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: white;
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-width: 800px; /* Largura máxima de 800px */
+  margin: 20px auto; /* Margem superior de 20px e centraliza horizontalmente */
+  display: flex; /* Exibe os itens em linha */
+  align-items: center; /* Alinha os itens no centro verticalmente */
+  gap: 10px; /* Espaçamento entre os itens */
+  color: white; /* Cor do texto branca */
 }
 
+/* Estilos para a barra de progresso */
 #barraProgresso {
-  flex: 1;
-  height: 10px;
-  background: #2ecc71;
-  border-radius: 5px;
-  outline: none;
-  transition: background 0.2s;
+  flex: 1; /* A barra ocupa todo o espaço restante */
+  height: 10px; /* Altura da barra de progresso */
+  background: #2ecc71; /* Cor de fundo verde */
+  border-radius: 5px; /* Bordas arredondadas */
+  outline: none; /* Remove o contorno */
+  transition: background 0.2s; /* Transição suave para a mudança de cor */
 }
 
+/* Estilos para o "thumb" (manípulo) da barra de progresso */
 #barraProgresso::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  cursor: pointer;
+  -webkit-appearance: none; /* Remove o estilo padrão do thumb */
+  width: 12px; /* Largura do thumb */
+  height: 12px; /* Altura do thumb */
+  border-radius: 50%; /* Torna o thumb redondo */
+  background: #fff; /* Cor de fundo branca */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
 }
 
+/* Estilos para os tempos atuais e totais exibidos na barra de progresso */
 #tempoAtual,
 #tempoTotal {
-  width: 50px;
-  text-align: center;
-  font-size: 12px;
+  width: 50px; /* Largura dos campos de tempo */
+  text-align: center; /* Alinha o texto no centro */
+  font-size: 12px; /* Tamanho da fonte */
 }

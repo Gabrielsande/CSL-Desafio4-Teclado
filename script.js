@@ -1,3 +1,4 @@
+// Mapeamento das teclas do teclado do computador para as notas musicais
 const mapeamento = {
   'z': 'do',  's': 'do#', 'x': 're', 'd': 're#',
   'c': 'mi',  'v': 'fa',  'g': 'fa#', 'b': 'sol',
@@ -5,21 +6,23 @@ const mapeamento = {
   '1': 'engracado', '2': 'gravar', '3': 'reproduzir'
 };
 
-let gravando = false;
-let gravaNotas = [];
-let inicioGravacao = 0;
-let modoEngracado = false;
+let gravando = false; // Variável para indicar se está gravando
+let gravaNotas = []; // Lista para armazenar as notas gravadas
+let inicioGravacao = 0; // Tempo de início da gravação
+let modoEngracado = false; // Variável que define se o modo engraçado está ativo
 
-let duracaoReproducao = 0;
-let inicioReproducao = 0;
-let intervaloProgresso;
-let tocando = false;
+let duracaoReproducao = 0; // Duração da reprodução
+let inicioReproducao = 0; // Tempo de início da reprodução
+let intervaloProgresso; // Intervalo para atualizar a barra de progresso
+let tocando = false; // Variável para controlar se está tocando a música
 
+// Seleção dos botões de controle
 const btnGravar = document.getElementById('btnGravar');
 const btnReproduzir = document.getElementById('btnReproduzir');
 const btnEngracado = document.getElementById('btnEngracado');
 const barraProgresso = document.getElementById('barraProgresso');
 
+// Função para formatar o tempo (milissegundos) em formato mm:ss
 function formatarTempo(ms) {
   const s = Math.floor(ms / 1000);
   const min = Math.floor(s / 60);
@@ -27,6 +30,7 @@ function formatarTempo(ms) {
   return `${min}:${seg < 10 ? '0' + seg : seg}`;
 }
 
+// Função para tocar a nota correspondente ao som
 function tocarNota(nota) {
   let audio;
   if (modoEngracado) {
@@ -39,13 +43,15 @@ function tocarNota(nota) {
   audio.play();
 }
 
+// Adiciona evento de clique nas teclas do piano
 document.querySelectorAll('.tecla').forEach(tecla => {
   tecla.addEventListener('click', () => {
-    const nota = tecla.dataset.nota;
-    tocarNota(nota);
-    tecla.classList.add('ativa');
-    setTimeout(() => tecla.classList.remove('ativa'), 150);
+    const nota = tecla.dataset.nota; // Obtém a nota da tecla clicada
+    tocarNota(nota); // Toca a nota
+    tecla.classList.add('ativa'); // Adiciona classe ativa para efeito visual
+    setTimeout(() => tecla.classList.remove('ativa'), 150); // Remove o efeito visual após 150ms
 
+    // Se estiver gravando, armazena a nota e o tempo em que foi tocada
     if (gravando) {
       const tempoAgora = Date.now();
       gravaNotas.push({ nota, tempo: tempoAgora - inicioGravacao });
@@ -53,17 +59,19 @@ document.querySelectorAll('.tecla').forEach(tecla => {
   });
 });
 
+// Adiciona evento de pressionamento de tecla
 document.addEventListener('keydown', e => {
-  const tecla = e.key.toLowerCase();
+  const tecla = e.key.toLowerCase(); // Converte a tecla pressionada para minúscula
   if (mapeamento[tecla]) {
     const notaOuComando = mapeamento[tecla];
+    // Se for um comando (gravar, reproduzir, modo engraçado), aciona o respectivo botão
     if (notaOuComando === 'gravar') btnGravar.click();
     else if (notaOuComando === 'reproduzir') btnReproduzir.click();
     else if (notaOuComando === 'engracado') btnEngracado.click();
     else {
-      tocarNota(notaOuComando);
+      tocarNota(notaOuComando); // Se for uma nota, toca a nota correspondente
       const teclaElemento = document.querySelector(`[data-nota="${notaOuComando}"]`);
-      teclaElemento?.classList.add('ativa');
+      teclaElemento?.classList.add('ativa'); // Adiciona o efeito visual na tecla
       if (gravando) {
         const tempoAgora = Date.now();
         gravaNotas.push({ nota: notaOuComando, tempo: tempoAgora - inicioGravacao });
@@ -72,6 +80,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// Adiciona evento de liberação de tecla
 document.addEventListener('keyup', e => {
   const nota = mapeamento[e.key.toLowerCase()];
   if (nota && !['gravar', 'reproduzir', 'engracado'].includes(nota)) {
@@ -79,21 +88,23 @@ document.addEventListener('keyup', e => {
   }
 });
 
+// Função para iniciar a gravação de notas
 btnGravar.addEventListener('click', () => {
   if (!gravando) {
     gravando = true;
     gravaNotas = [];
     inicioGravacao = Date.now();
-    btnGravar.textContent = 'Parar';
-    btnReproduzir.disabled = true;
-    atualizarBarraManual(0);
+    btnGravar.textContent = 'Parar'; // Altera o texto do botão
+    btnReproduzir.disabled = true; // Desabilita o botão de reprodução durante a gravação
+    atualizarBarraManual(0); // Atualiza a barra de progresso
   } else {
     gravando = false;
-    btnGravar.textContent = 'Gravar';
-    btnReproduzir.disabled = gravaNotas.length === 0;
+    btnGravar.textContent = 'Gravar'; // Altera o texto do botão para "Gravar"
+    btnReproduzir.disabled = gravaNotas.length === 0; // Habilita o botão de reprodução se houver notas gravadas
   }
 });
 
+// Função para reproduzir a gravação
 btnReproduzir.addEventListener('click', () => {
   if (gravaNotas.length === 0) return;
 
@@ -101,32 +112,33 @@ btnReproduzir.addEventListener('click', () => {
   btnReproduzir.disabled = true;
 
   const duracao = gravaNotas[gravaNotas.length - 1].tempo;
-  iniciarBarra(duracao);
+  iniciarBarra(duracao); // Inicia a barra de progresso
 
+  // Reproduz as notas gravadas com o respectivo intervalo
   gravaNotas.forEach(({ nota, tempo }, index) => {
     setTimeout(() => {
       tocarNota(nota);
       const tecla = document.querySelector(`[data-nota="${nota}"]`);
-      tecla?.classList.add('ativa');
-      setTimeout(() => tecla?.classList.remove('ativa'), 150);
+      tecla?.classList.add('ativa'); // Adiciona o efeito visual na tecla
+      setTimeout(() => tecla?.classList.remove('ativa'), 150); // Remove o efeito visual após 150ms
 
       if (index === gravaNotas.length - 1) {
         btnGravar.disabled = false;
         btnReproduzir.disabled = false;
-        pararBarra();
+        pararBarra(); // Para a barra de progresso
       }
     }, tempo);
   });
 });
 
+// Função para alternar o modo engraçado
 btnEngracado.addEventListener('click', () => {
   modoEngracado = !modoEngracado;
   btnEngracado.classList.toggle('ativo');
   btnEngracado.textContent = modoEngracado ? 'Modo Normal 🎉' : 'Modo Engraçado 🎵';
 });
 
-// BARRA DE PROGRESSO COM CONTROLE MANUAL
-
+// Funções para manipulação da barra de progresso
 function iniciarBarra(duracao = 5000) {
   duracaoReproducao = duracao;
   inicioReproducao = Date.now();
@@ -155,6 +167,7 @@ function atualizarBarraManual(porcentagem) {
   document.getElementById('tempoTotal').textContent = formatarTempo(0);
 }
 
+// Função para atualizar a barra de progresso manualmente
 barraProgresso.addEventListener('input', (e) => {
   if (!tocando) return;
   const novoProgresso = parseFloat(e.target.value);
@@ -163,3 +176,22 @@ barraProgresso.addEventListener('input', (e) => {
   document.getElementById('tempoAtual').textContent = formatarTempo(novoTempo);
   inicioReproducao = Date.now() - novoTempo;
 });
+
+// Função para alternar o tema (modo claro/escuro)
+const btn = document.getElementById('toggleTheme');
+btn.addEventListener('click', () => {
+  document.body.classList.toggle('white-mode');
+  if(document.body.classList.contains('white-mode')) {
+    btn.textContent = '🌙 ';
+  } else {
+    btn.textContent = '☀️';
+  }
+});
+
+// Função para simular o carregamento da página
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById('loading-screen').style.display = 'none'; // Oculta a tela de carregamento
+    document.getElementById('game-content').style.display = 'block'; // Exibe o conteúdo do jogo
+  }, 3000); // Simula 3 segundos de carregamento
+};

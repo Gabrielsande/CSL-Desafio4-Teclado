@@ -6,41 +6,54 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Tela de Carregamento -->
+  <div id="loading-screen">
+    <div class="loader"></div>
+    <p>Carregando o Piano...</p>
+  </div>
+  
+  <!-- Título da página -->
   <h1>Teclado Musical</h1>
+  
+  <!-- Botão para alternar entre temas claro e escuro -->
+  <button id="toggleTheme">🌙 </button>
 
+  <!-- Div do piano com teclas e controles -->
   <div class="piano">
-    <!-- Botões -->
+    
+    <!-- Controles do piano (gravar, reproduzir, modo engraçado) -->
     <div class="controles">
-      
       <button id="btnEngracado">Modo Engraçado 🎵</button>
       <button id="btnGravar">Gravar</button>
       <button id="btnReproduzir" aria-label=></button>
+      
+      <!-- Barra de progresso -->
       <div id="barraProgressoContainer">
-    <span id="tempoAtual">0:00</span>
-    <input type="range" id="barraProgresso" value="0" min="0" max="100" />
-    <span id="tempoTotal">0:00</span>
-  </div>
+        <span id="tempoAtual">0:00</span>
+        <input type="range" id="barraProgresso" value="0" min="0" max="100" />
+        <span id="tempoTotal">0:00</span>
+        <button id="btnSalvar">Salvar</button>
+      </div>
     </div>
 
     <!-- Teclas brancas -->
-    <div class="tecla branca" data-nota="do">Dó</div>
-    <div class="tecla branca" data-nota="re">Ré</div>
-    <div class="tecla branca" data-nota="mi">Mi</div>
-    <div class="tecla branca" data-nota="fa">Fá</div>
-    <div class="tecla branca" data-nota="sol">Sol</div>
-    <div class="tecla branca" data-nota="la">Lá</div>
-    <div class="tecla branca" data-nota="si">Si</div>
+    <div class="tecla branca" data-nota="do">Dó (Z)</div>
+    <div class="tecla branca" data-nota="re">Ré (X)</div>
+    <div class="tecla branca" data-nota="mi">Mi (C)</div>
+    <div class="tecla branca" data-nota="fa">Fá (V)</div>
+    <div class="tecla branca" data-nota="sol">Sol (B)</div>
+    <div class="tecla branca" data-nota="la">Lá (N)</div>
+    <div class="tecla branca" data-nota="si">Si (M)</div>
 
     <!-- Teclas pretas -->
-    <div class="tecla preta" style="left: 135px" data-nota="do#"></div>
-    <div class="tecla preta" style="left: 290px" data-nota="re#"></div>
-    <div class="tecla preta" style="left: 450px" data-nota="fa#"></div>
-    <div class="tecla preta" style="right: 295px" data-nota="sol#"></div>
-    <div class="tecla preta" style="right: 135px" data-nota="la#"></div>
+    <div class="tecla preta" style="left: 125px" data-nota="do#"></div>
+    <div class="tecla preta" style="left: 285px" data-nota="re#"></div>
+    <div class="tecla preta" style="left: 440px" data-nota="fa#"></div>
+    <div class="tecla preta" style="right: 285px" data-nota="sol#"></div>
+    <div class="tecla preta" style="right: 130px" data-nota="la#"></div>
   </div>
 
   <!-- Barra de progresso com tempo -->
-
   <script src="script.js"></script>
 </body>
 </html>
